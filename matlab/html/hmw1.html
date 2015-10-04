@@ -1,0 +1,241 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>Optimization Assignment 1</title><meta name="generator" content="MATLAB 8.6"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2015-10-04"><meta name="DC.source" content="hmw1.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h1>Optimization Assignment 1</h1><!--introduction--><p>Instructions are to find the minima of <img src="hmw1_eq08750539711347331802.png" alt="$$f(y_{1},y_{2}) = 121(2-y_{1}^{2}-y_{2}^{2}-3y_{1}-3y_{2} + 2y_1y_{2} )^{2} + (y_{1}-y_{2})^{2} $$" style="width:291px;height:13px;"></p><!--/introduction--><h2>Contents</h2><div><ul><li><a href="#1">Populating Function</a></li><li><a href="#2">Visualize Function</a></li><li><a href="#3">Gradient Descent</a></li><li><a href="#4">Newton's Method</a></li></ul></div><h2>Populating Function<a name="1"></a></h2><pre class="codeinput">clc;
+zmwidth=2;          <span class="comment">% Zoom width</span>
+
+<span class="comment">% f = @Ackley;</span>
+f = @(x) 121*(2 - x(1)^2 - x(2)^2 - 3*x(1) - 3*x(2) + 2*x(1)*x(2))^2 + (x(1)-x(2))^2;
+x = -3:0.1:3;
+y = x;
+z = zeros(length(x));
+<span class="keyword">for</span> i=1:length(x)
+    <span class="keyword">for</span> j=1:length(y),
+        z(i,j)=f([x(i) y(j)]);
+    <span class="keyword">end</span>
+<span class="keyword">end</span>
+</pre><h2>Visualize Function<a name="2"></a></h2><pre class="codeinput">h1 = figure(<span class="string">'Position'</span>,[314 27 1113 744]);
+subplot(2,2,1); surf(x,y,z); title(<span class="string">'Gradient Descent - Surf'</span>);  hold <span class="string">on</span>
+subplot(2,2,2); contour(x,y,z,25); title(<span class="string">'Gradient Descent - Contour'</span>); axis <span class="string">equal</span>; hold <span class="string">on</span>
+
+
+subplot(2,2,3); surf(x,y,z); title(<span class="string">'Newtons - Surf'</span>); hold <span class="string">on</span>
+subplot(2,2,4); contour(x,y,z,25); title(<span class="string">'Newtons - Contour'</span>); axis <span class="string">equal</span>; hold <span class="string">on</span>
+</pre><img vspace="5" hspace="5" src="hmw1_01.png" style="width:1113px;height:744px;" alt=""> <h2>Gradient Descent<a name="3"></a></h2><p>Performing gradient descent</p><pre class="codeinput">alpha  = 0.0001;         <span class="comment">% Gradient Descent learn rate</span>
+delta  = 0.001;          <span class="comment">% Gradient step size, dt</span>
+niter  = 100;             <span class="comment">% Number of Iterations</span>
+tol    = 1e-6;           <span class="comment">% Tolerance on gradient</span>
+abstol = 1e-6;           <span class="comment">% Tolerance on function Value</span>
+
+s     = [1.3 1.5];      <span class="comment">% Initialization</span>
+i=0; absnorm=inf; gnorm=inf;
+<span class="keyword">while</span> (i&lt;=niter &amp;&amp; gnorm&gt;tol &amp;&amp; absnorm&gt;abstol)
+    grad = gradAnon(s,delta,f);
+    s0 = s;
+    s  = s - alpha*grad;
+
+    gnorm   = norm(gradAnon(s,delta,f));
+    absnorm = norm(s-s0);
+
+    subplot(2,2,1);
+    plot3(s(1),s(2),f(s),<span class="string">'ro--'</span>,<span class="string">'MarkerFaceColor'</span>,<span class="string">'r'</span>,<span class="string">'MarkerEdgeColor'</span>,<span class="string">'w'</span>);
+
+    subplot(2,2,2);
+    plot([s0(1) s(1)],[s0(2) s(2)],<span class="string">'ro--'</span>,<span class="string">'MarkerEdgeColor'</span>,<span class="string">'k'</span>,<span class="string">'MarkerFaceColor'</span>,<span class="string">'r'</span>, <span class="string">'MarkerSize'</span>,10);
+    zm = [s-zmwidth;s+zmwidth]; xlim(zm(:,1)); ylim(zm(:,2));
+
+    pause(0.25);
+    i=i+1;
+<span class="keyword">end</span>
+display(sprintf(<span class="string">'Gradient Descent run for %d iterations'</span>,niter));
+display(sprintf(<span class="string">'GD minimum is %.5f at x=%.2f and y=%.2f'</span>,f(s),s(1),s(2)));
+</pre><pre class="codeoutput">Gradient Descent run for 100 iterations
+GD minimum is 0.00109 at x=0.32 and y=0.35
+</pre><img vspace="5" hspace="5" src="hmw1_02.png" style="width:1113px;height:744px;" alt=""> <h2>Newton's Method<a name="4"></a></h2><p>Use Newton's method on function</p><pre class="codeinput">niter = 50;
+delta = 0.001;
+
+s = [1.3 1.5];
+
+i=0; absnorm=inf; gnorm=inf;
+<span class="keyword">while</span> (i&lt;niter &amp;&amp; gnorm&gt;tol &amp;&amp; absnorm&gt;abstol)
+    s0 = s;
+    hess = hessAnon(s,delta,f);
+    grad = gradAnon(s,delta,f);
+    s = s - (hess\grad')';
+
+    absnorm = norm(s-s0);
+    gnorm   = norm(grad);
+
+    subplot(2,2,3);
+    plot3(s(1),s(2),f(s),<span class="string">'go--'</span>,<span class="string">'MarkerEdgeColor'</span>,<span class="string">'w'</span>,<span class="string">'MarkerFaceColor'</span>,<span class="string">'g'</span>);
+
+    subplot(2,2,4);
+    plot([s0(1) s(1)],[s0(2) s(2)],<span class="string">'go--'</span>,<span class="string">'MarkerEdgeColor'</span>,<span class="string">'k'</span>,<span class="string">'MarkerFaceColor'</span>,<span class="string">'g'</span>,<span class="string">'MarkerSize'</span>,10);
+    zm = [s-zmwidth;s+zmwidth]; xlim(zm(:,1)); ylim(zm(:,2));
+    pause(0.25);
+<span class="keyword">end</span>
+
+display(sprintf(<span class="string">'Newtons Method run for %d iterations'</span>,niter));
+display(sprintf(<span class="string">'NM minimum is %.5f at x=%.2f and y=%.2f'</span>,f(s),s(1),s(2)));
+</pre><pre class="codeoutput">Newtons Method run for 50 iterations
+NM minimum is 0.00027 at x=0.33 and y=0.33
+</pre><img vspace="5" hspace="5" src="hmw1_03.png" style="width:1113px;height:744px;" alt=""> <p class="footer"><br><a href="http://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2015b</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%% Optimization Assignment 1
+% Instructions are to find the minima of 
+% $$f(y_{1},y_{2}) = 121(2-y_{1}^{2}-y_{2}^{2}-3y_{1}-3y_{2} + 2y_1y_{2} )^{2} + (y_{1}-y_{2})^{2} $$
+
+%% Populating Function
+clc;
+zmwidth=2;          % Zoom width
+
+% f = @Ackley;
+f = @(x) 121*(2 - x(1)^2 - x(2)^2 - 3*x(1) - 3*x(2) + 2*x(1)*x(2))^2 + (x(1)-x(2))^2;
+x = -3:0.1:3;
+y = x;
+z = zeros(length(x));
+for i=1:length(x)
+    for j=1:length(y), 
+        z(i,j)=f([x(i) y(j)]); 
+    end
+end
+
+%% Visualize Function 
+h1 = figure('Position',[314 27 1113 744]);
+subplot(2,2,1); surf(x,y,z); title('Gradient Descent - Surf');  hold on
+subplot(2,2,2); contour(x,y,z,25); title('Gradient Descent - Contour'); axis equal; hold on
+
+
+subplot(2,2,3); surf(x,y,z); title('Newtons - Surf'); hold on
+subplot(2,2,4); contour(x,y,z,25); title('Newtons - Contour'); axis equal; hold on
+%% Gradient Descent
+% Performing gradient descent
+alpha  = 0.0001;         % Gradient Descent learn rate
+delta  = 0.001;          % Gradient step size, dt
+niter  = 100;             % Number of Iterations 
+tol    = 1e-6;           % Tolerance on gradient
+abstol = 1e-6;           % Tolerance on function Value
+
+s     = [1.3 1.5];      % Initialization
+i=0; absnorm=inf; gnorm=inf;
+while (i<=niter && gnorm>tol && absnorm>abstol)
+    grad = gradAnon(s,delta,f);
+    s0 = s;
+    s  = s - alpha*grad;
+    
+    gnorm   = norm(gradAnon(s,delta,f));
+    absnorm = norm(s-s0);
+    
+    subplot(2,2,1);
+    plot3(s(1),s(2),f(s),'roREPLACE_WITH_DASH_DASH','MarkerFaceColor','r','MarkerEdgeColor','w');
+    
+    subplot(2,2,2);
+    plot([s0(1) s(1)],[s0(2) s(2)],'roREPLACE_WITH_DASH_DASH','MarkerEdgeColor','k','MarkerFaceColor','r', 'MarkerSize',10);
+    zm = [s-zmwidth;s+zmwidth]; xlim(zm(:,1)); ylim(zm(:,2));
+    
+    pause(0.25);
+    i=i+1;
+end
+display(sprintf('Gradient Descent run for %d iterations',niter));
+display(sprintf('GD minimum is %.5f at x=%.2f and y=%.2f',f(s),s(1),s(2)));
+
+%% Newton's Method
+% Use Newton's method on function
+niter = 50;
+delta = 0.001;
+
+s = [1.3 1.5];
+
+i=0; absnorm=inf; gnorm=inf;
+while (i<niter && gnorm>tol && absnorm>abstol)
+    s0 = s;
+    hess = hessAnon(s,delta,f);
+    grad = gradAnon(s,delta,f);    
+    s = s - (hess\grad')';
+    
+    absnorm = norm(s-s0);
+    gnorm   = norm(grad);
+
+    subplot(2,2,3);
+    plot3(s(1),s(2),f(s),'goREPLACE_WITH_DASH_DASH','MarkerEdgeColor','w','MarkerFaceColor','g');
+
+    subplot(2,2,4);
+    plot([s0(1) s(1)],[s0(2) s(2)],'goREPLACE_WITH_DASH_DASH','MarkerEdgeColor','k','MarkerFaceColor','g','MarkerSize',10);
+    zm = [s-zmwidth;s+zmwidth]; xlim(zm(:,1)); ylim(zm(:,2));
+    pause(0.25);
+end
+
+display(sprintf('Newtons Method run for %d iterations',niter));
+display(sprintf('NM minimum is %.5f at x=%.2f and y=%.2f',f(s),s(1),s(2)));
+
+
+
+
+
+##### SOURCE END #####
+--></body></html>
