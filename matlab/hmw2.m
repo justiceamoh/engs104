@@ -38,7 +38,7 @@ f   = c;
 Aeq = a;
 beq = b;
 lb  = 0;
-x = linprog(f,[],[],Aeq,beq,lb);
+[x,fval] = linprog(f,[],[],Aeq,beq,lb);
 
 
 
@@ -120,33 +120,36 @@ lb = 0;
 
 %% PROBLEM 4
 % *Question* Max-flow problem - Dual
-A = [ 1 -1  0 -1  0  0  0  0 ; ...
-      0  0  0  0 -1  1 -1  0 ; ...
-      0  1 -1  0  1  0  0  0 ; ...
-      0  0  0  1  0  0  1 -1 ]';
+Aeq = [ 1 -1  0 -1  0  0  0  0 ; ...
+        0  0  0  0 -1  1 -1  0 ; ...
+        0  1 -1  0  1  0  0  0 ; ...
+        0  0  0  1  0  0  1 -1 ];
+Aeq = -Aeq';
+[n,m] = size(Aeq);
+
+A = eye(m);
+c = zeros(n,1); c(1)=-1; c(6)=-1;
+
 b = [13  5  6  1  7 12  1  4]';
+lb = 0;
+% [x_dual, fval] = linprog(b,[],[],Aeq,c,lb);
 
-A = -A';
-[n,m] = size(A);
-c  = ones(n,1);
-f  =  b;
-b  = -c;
-lb =  0;
-
-[x_dual, fval] = linprog(f,A,b,[],[],lb);
 
 
 %% PROBLEM 5
-% ????
 % Equality Constraints
-a = @(x) x(1) + x(2) + x(3) -30;
-b = @(x) x(1)^2 + 2*x(2)^4 +3* x(3)^2 - 2;
-c = @(x) 2*(x(1)+40)^2 + (x(2)-30)^2 + (x(3)+20)^4 - 1;
+% a = @(x) x(1) + x(2) + x(3) -30;
+% b = @(x) x(1)^2 + 2*x(2)^4 +3* x(3)^2 - 2;
+% c = @(x) 2*(x(1)+40)^2 + (x(2)-30)^2 + (x(3)+20)^4 - 1;
+a = [1 1 1 0 0 0 0 0 0];
+b = [0 0 0 1 1 1 0 0 0];
+c = [0 0 0 0 0 0 1 1 1];
 
 gfun = @p5con;
-f = @(x) norm(a(x)-b(x),2);
 
-x0 = [-2 1];
-options = optimoptions('fmincon','Algorithm','quasi-newton','Display','iter');
-[x,fval,exitflag,output] = fmincon(f,x0,[],[],[],[],[],[],gfun,options);
+f = @(x) norm(a-b,2).^2 + norm(c-b,2).^2 + norm(a-c,2).^2;
+
+x0 = [-2 1 0 1 4 1 1 2 3];
+options = optimoptions('fmincon','Algorithm','interior-point','Display','iter');
+[x,fval] = fmincon(f,x0,[],[],[],[],[],[],gfun,options);
 

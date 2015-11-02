@@ -6,7 +6,7 @@
    <!--
 This HTML was auto-generated from MATLAB code.
 To make changes, update the MATLAB code and republish this document.
-      --><title>hmw2</title><meta name="generator" content="MATLAB 8.6"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2015-10-28"><meta name="DC.source" content="hmw2.m"><style type="text/css">
+      --><title>hmw2</title><meta name="generator" content="MATLAB 8.6"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2015-11-02"><meta name="DC.source" content="hmw2.m"><style type="text/css">
 html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
 
 html { min-height:100%; margin-bottom:1px; }
@@ -66,32 +66,32 @@ table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px soli
 
 
 
-  </style></head><body><div class="content"><h2>Contents</h2><div><ul><li><a href="#2">Problem 1</a></li><li><a href="#3">Part A</a></li><li><a href="#4">Part B</a></li><li><a href="#5">Part C</a></li><li><a href="#6">Problem 2</a></li><li><a href="#7">Part B - L1 Norm</a></li><li><a href="#8">Part A - Infinity Norm</a></li></ul></div><pre class="codeinput"><span class="comment">% Author: Justice Amoh</span>
+  </style></head><body><div class="content"><h2>Contents</h2><div><ul><li><a href="#2">PROBLEM 1</a></li><li><a href="#3">Part A</a></li><li><a href="#4">Part B</a></li><li><a href="#5">Part C</a></li><li><a href="#6">PROBLEM 2</a></li><li><a href="#7">Part A - Infinity Norm</a></li><li><a href="#8">Part B - L1 Norm</a></li><li><a href="#9">Part C</a></li><li><a href="#10">Part D</a></li><li><a href="#11">PROBLEM 3</a></li><li><a href="#12">PROBLEM 4</a></li><li><a href="#13">PROBLEM 5</a></li></ul></div><pre class="codeinput"><span class="comment">% Author: Justice Amoh</span>
 <span class="comment">% Description: ENGS 104 - Optimization: Assignment 2</span>
 <span class="comment">% Date: 10/26/2015</span>
-</pre><h2>Problem 1<a name="2"></a></h2><p>Linear program in augmented form: <img src="hmw2_eq06351983014338425443.png" alt="$min_{x}c'*x$" style="width:49px;height:11px;"> such that <img src="hmw2_eq07802501483891918451.png" alt="$a*x=b, x \geq 0$" style="width:73px;height:10px;">.</p><pre class="codeinput"><span class="comment">% load file a2p1.mat with vars a, b and c.</span>
+</pre><h2>PROBLEM 1<a name="2"></a></h2><p>Linear program in augmented form: <img src="hmw2_eq06351983014338425443.png" alt="$min_{x}c'*x$" style="width:49px;height:11px;"> such that <img src="hmw2_eq07802501483891918451.png" alt="$a*x=b, x \geq 0$" style="width:73px;height:10px;">.</p><pre class="codeinput"><span class="comment">% load file a2p1.mat with vars a, b and c.</span>
 load <span class="string">data/a2p1.mat</span>
-</pre><h2>Part A<a name="3"></a></h2><p>Which feasible solution has the largest value for <img src="hmw2_eq06603900766307330171.png" alt="$x_{23}$" style="width:14px;height:7px;"> ? <img src="hmw2_eq16798636901957678394.png" alt="$max(f(x))= -min(-f(x))$" style="width:133px;height:11px;"></p><pre class="codeinput">f = zeros(size(c));
+</pre><h2>Part A<a name="3"></a></h2><p>Which feasible solution has the largest value for <img src="hmw2_eq06603900766307330171.png" alt="$x_{23}$" style="width:14px;height:7px;"> ? <img src="hmw2_eq07072822593092353350.png" alt="$\max(f(x))= -\min(-f(x))$" style="width:132px;height:11px;"></p><pre class="codeinput">f = zeros(size(c));
 f(23) = -1;
 
 Aeq = a;
 beq = b;
 lb  = 0;
-x = linprog(f,[],[],Aeq,beq,lb);
-</pre><h2>Part B<a name="4"></a></h2><p>Is there a basic feasible solution involving <img src="hmw2_eq12793134400525030564.png" alt="$x_{4}, x_{12}, x_{23}$" style="width:49px;height:8px;"> ?</p><pre class="codeinput">f = zeros(size(c));
+[x,fval] = linprog(f,[],[],Aeq,beq,lb);
+</pre><h2>Part B<a name="4"></a></h2><p>Is there a basic feasible solution involving <img src="hmw2_eq12793134400525030564.png" alt="$x_{4}, x_{12}, x_{23}$" style="width:49px;height:8px;"> ? Set <img src="hmw2_eq12793134400525030564.png" alt="$x_{4}, x_{12}, x_{23}$" style="width:49px;height:8px;"> to 1, all other unknowns to zero and run LP</p><pre class="codeinput">f = zeros(size(c));
 f(4)=1; f(12) = 1; f(23) = 1;
 
 Aeq = a;
 beq = b;
 lb  = 0;
-x = linprog(f,[],[],Aeq,beq,lb);
+[x,fval] = linprog(f,[],[],Aeq,beq,lb);
 
 <span class="comment">% *Answer* : Yeah, there is a feasible solution involving just $x_{4}, x_{12}, x_{23}$</span>
 </pre><h2>Part C<a name="5"></a></h2><pre class="codeinput">f   = c;
 Aeq = a;
 beq = b;
 lb  = 0;
-x = linprog(f,[],[],Aeq,beq,lb);
+[x,fval] = linprog(f,[],[],Aeq,beq,lb);
 </pre><pre class="codeoutput">Warning: Length of lower bounds is &lt; length(x); filling in missing lower bounds
 with -Inf. 
 Exiting: One or more of the residuals, duality gap, or total relative error
@@ -110,38 +110,136 @@ Exiting: One or more of the residuals, duality gap, or total relative error
  has stalled:
          the dual appears to be infeasible (and the primal unbounded).      
          (The primal residual &lt; TolFun=1.00e-08.)
-</pre><h2>Problem 2<a name="6"></a></h2><h2>Part B - L1 Norm<a name="7"></a></h2><p><b>Question</b>: <img src="hmw2_eq09359084868316522929.png" alt="$\min_{u} \left \|u*a-c \right \|_{1}$" style="width:80px;height:12px;"> for <img src="hmw2_eq03917577311927190062.png" alt="$\min_{u} \left \| u*a-b \right \|_{1}$" style="width:80px;height:12px;"></p><pre class="codeinput">[n,m] = size(a);
-Aeq = [+a -eye(n); <span class="keyword">...</span>
-       -a -eye(n)];
-beq = [b ; -b];
-
-f   = [zeros(1,m) ones(1,n)];
-x   = linprog(f,[],[],Aeq,beq);   <span class="comment">% check dimensionality</span>
-
-<span class="comment">% for $\min_{u} \left \| u*a-c \right \|_{\1}$</span>
-aa = a';
+</pre><h2>PROBLEM 2<a name="6"></a></h2><h2>Part A - Infinity Norm<a name="7"></a></h2><p><b>Question</b>: <img src="hmw2_eq11357858330969619170.png" alt="$\min_{y} \left \|y*a-c \right \|_{\infty}$" style="width:83px;height:12px;"></p><pre class="codeinput">aa = a';
 bb = c';
 
 [n,m] = size(aa);
-Aeq = [+aa -eye(n); <span class="keyword">...</span>
-       -aa -eye(n)];
-beq = [bb ; -bb];
+Aineq = [+aa -ones(n,1); <span class="keyword">...</span>
+         -aa -ones(n,1)];
+bineq = [bb ; -bb];
 
-f   = [zeros(1,m) ones(1,n)];
-x   = linprog(f,[],[],Aeq,beq);   <span class="comment">% check dimensionality</span>
-</pre><h2>Part A - Infinity Norm<a name="8"></a></h2><p><b>Question</b>: <img src="hmw2_eq11357858330969619170.png" alt="$\min_{y} \left \|y*a-c \right \|_{\infty}$" style="width:83px;height:12px;"></p><pre class="codeoutput">Optimization terminated.
-Exiting: One or more of the residuals, duality gap, or total relative error
- has stalled:
-         the primal appears to be infeasible and the dual unbounded since
-         the dual objective &gt; 1e+10
-         and the primal objective &gt; -1e+6.
+f   = [zeros(1,m) 1];
+[x,fval]   = linprog(f,Aineq,bineq,[],[]);   <span class="comment">% check dimensionality</span>
+fprintf(<span class="string">'Linfty Norm - Minimum value is: %.2f \n'</span>,fval)
+</pre><h2>Part B - L1 Norm<a name="8"></a></h2><p><b>Question</b>: <img src="hmw2_eq09359084868316522929.png" alt="$\min_{u} \left \|u*a-c \right \|_{1}$" style="width:80px;height:12px;"></p><pre class="codeinput">aa = a';
+bb = c';
+
+[n,m] = size(aa);
+Aineq = [+aa -eye(n); <span class="keyword">...</span>
+         -aa -eye(n)];
+bineq = [+bb ; -bb];
+
+f    = [zeros(1,m) ones(1,n)];
+[u,fval]  = linprog(f,Aineq,bineq,[],[]);
+fprintf(<span class="string">'L1 Norm - Minimum value is: %.2f \n'</span>,fval)
+x_l1 = u(m+1:end);
+</pre><h2>Part C<a name="9"></a></h2><p><b>Question</b>: <img src="hmw2_eq14601468005958751004.png" alt="$\min_{z} \left \|z*a-c \right \|_{2}$" style="width:79px;height:12px;"></p><pre class="codeinput">A = a';
+B = c';
+
+z = A' * ((A*A')\ B);
+fval = norm((A*z)-B,2);
+fprintf(<span class="string">'L2 Norm - Minimum value is: %.2f \n'</span>,fval);
+</pre><h2>Part D<a name="10"></a></h2><p><b>Question</b>: <img src="hmw2_eq13774229926097867587.png" alt="$\min_{w} \left \|w*a-c \right \|_{1}+\left \|w*a-c \right \|_{\infty}$" style="width:159px;height:12px;"></p><pre class="codeinput">aa = a';
+bb = c';
+
+[n,m] = size(aa);
+Aineq = [+aa -eye(n) zeros(n,1); <span class="keyword">...</span>
+         -aa -eye(n) zeros(n,1); <span class="keyword">...</span>
+         zeros(n,m) eye(n) -ones(n,1)];
+bineq = [+bb ; -bb; zeros(n,1)];
+
+f     = [zeros(1,m) ones(1,n) 1];
+[w,fval]  = linprog(f,Aineq,bineq,[],[]);
+fprintf(<span class="string">'L1 + Infinity Norm - Minimum value is: %.2f \n'</span>,fval)
+</pre><pre class="codeoutput">Optimization terminated.
+Linfty Norm - Minimum value is: 4.18 
+Optimization terminated.
+L1 Norm - Minimum value is: 208.14 
+Warning: Matrix is close to singular or badly scaled. Results may be
+inaccurate. RCOND =  1.400618e-19. 
+L2 Norm - Minimum value is: 299.20 
+Optimization terminated.
+L1 + Infinity Norm - Minimum value is: 215.48 
+</pre><h2>PROBLEM 3<a name="11"></a></h2><p><b>Question</b> Solve max-flow problem - Primal</p><pre class="codeinput">Aeq = [ 1 -1  0 -1  0  0  0  0 ; <span class="keyword">...</span>
+        0  0  0  0 -1  1 -1  0 ; <span class="keyword">...</span>
+        0  1 -1  0  1  0  0  0 ; <span class="keyword">...</span>
+        0  0  0  1  0  0  1 -1 ];
+
+[n,m] = size(Aeq);
+beq = zeros(n,1);
+
+A = eye(m);
+b = [13  5  6  1  7 12  1  4]';
+
+f  = zeros(1,m); f(1)=-1; f(6)=-1;
+lb = 0;
+
+[x_primal,fval] = linprog(f,A,b,Aeq,beq,lb);
+</pre><pre class="codeoutput">Warning: Length of lower bounds is &lt; length(x); filling in missing lower bounds
+with -Inf. 
+Optimization terminated.
+</pre><h2>PROBLEM 4<a name="12"></a></h2><p><b>Question</b> Max-flow problem - Dual</p><pre class="codeinput">Aeq = [ 1 -1  0 -1  0  0  0  0 ; <span class="keyword">...</span>
+        0  0  0  0 -1  1 -1  0 ; <span class="keyword">...</span>
+        0  1 -1  0  1  0  0  0 ; <span class="keyword">...</span>
+        0  0  0  1  0  0  1 -1 ];
+Aeq = -Aeq';
+[n,m] = size(Aeq);
+
+A = eye(m);
+c = zeros(n,1); c(1)=-1; c(6)=-1;
+
+b = [13  5  6  1  7 12  1  4]';
+lb = 0;
+<span class="comment">% [x_dual, fval] = linprog(b,[],[],Aeq,c,lb);</span>
+</pre><h2>PROBLEM 5<a name="13"></a></h2><p>Equality Constraints a = @(x) x(1) + x(2) + x(3) -30; b = @(x) x(1)^2 + 2*x(2)^4 +3* x(3)^2 - 2; c = @(x) 2*(x(1)+40)^2 + (x(2)-30)^2 + (x(3)+20)^4 - 1;</p><pre class="codeinput">a = [1 1 1 0 0 0 0 0 0];
+b = [0 0 0 1 1 1 0 0 0];
+c = [0 0 0 0 0 0 1 1 1];
+
+gfun = @p5con;
+
+f = @(x) norm(a-b,2).^2 + norm(c-b,2).^2 + norm(a-c,2).^2;
+
+x0 = [-2 1 0 1 4 1 1 2 3];
+options = optimoptions(<span class="string">'fmincon'</span>,<span class="string">'Algorithm'</span>,<span class="string">'interior-point'</span>,<span class="string">'Display'</span>,<span class="string">'iter'</span>);
+[x,fval] = fmincon(f,x0,[],[],[],[],[],[],gfun,options);
+</pre><pre class="codeoutput">                                            First-order      Norm of
+ Iter F-count            f(x)  Feasibility   optimality         step
+    0      10    1.800000e+01    2.840e+05    0.000e+00
+    1      20    1.800000e+01    9.095e+04    1.033e+01    1.885e+01
+    2      30    1.800000e+01    2.990e+04    2.003e+00    4.559e+00
+    3      40    1.800000e+01    1.067e+04    8.717e-01    3.720e+00
+    4      50    1.800000e+01    4.903e+03    3.278e-01    3.685e+00
+    5      60    1.800000e+01    3.930e+03    6.854e-01    7.812e+00
+    6      72    1.800000e+01    2.444e+03    7.801e+00    1.129e+01
+    7      82    1.800000e+01    7.284e+02    1.018e+00    1.739e+01
+    8      92    1.800000e+01    2.387e+02    3.785e-01    1.119e+01
+    9     102    1.800000e+01    1.882e+02    1.224e+00    9.942e+00
+   10     112    1.800000e+01    1.265e+02    9.893e-01    5.935e+00
+   11     122    1.800000e+01    8.233e+01    1.846e+00    7.519e+00
+   12     132    1.800000e+01    2.387e+01    7.655e-01    3.713e+00
+   13     142    1.800000e+01    6.621e+00    3.128e-01    2.023e+00
+   14     152    1.800000e+01    1.774e+00    1.417e-01    1.176e+00
+   15     162    1.800000e+01    4.231e-01    6.045e-02    5.907e-01
+   16     172    1.800000e+01    6.230e-02    1.820e-02    2.283e-01
+   17     182    1.800000e+01    2.305e-03    1.418e-03    4.393e-02
+   18     192    1.800000e+01    3.627e-06    1.219e-05    1.744e-03
+   19     202    1.800000e+01    7.693e-12    3.860e-09    2.752e-06
+
+Local minimum found that satisfies the constraints.
+
+Optimization completed because the objective function is non-decreasing in 
+feasible directions, to within the default value of the function tolerance,
+and constraints are satisfied to within the default value of the constraint tolerance.
+
+
+
 </pre><p class="footer"><br><a href="http://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2015b</a><br></p></div><!--
 ##### SOURCE BEGIN #####
 % Author: Justice Amoh
 % Description: ENGS 104 - Optimization: Assignment 2
 % Date: 10/26/2015
 
-%% Problem 1
+%% PROBLEM 1
 % Linear program in augmented form:
 % $min_{x}c'*x$ such that $a*x=b, x \geq 0$.
 
@@ -150,24 +248,25 @@ load data/a2p1.mat
 
 %%% Part A
 % Which feasible solution has the largest value for $x_{23}$ ?
-% $max(f(x))= -min(-f(x))$
+% $\max(f(x))= -\min(-f(x))$
 f = zeros(size(c));
 f(23) = -1;
 
 Aeq = a;
 beq = b;
 lb  = 0;
-x = linprog(f,[],[],Aeq,beq,lb);
+[x,fval] = linprog(f,[],[],Aeq,beq,lb);
 
 %%% Part B
 % Is there a basic feasible solution involving $x_{4}, x_{12}, x_{23}$ ?
+% Set $x_{4}, x_{12}, x_{23}$ to 1, all other unknowns to zero and run LP
 f = zeros(size(c));
 f(4)=1; f(12) = 1; f(23) = 1;
 
 Aeq = a;
 beq = b;
 lb  = 0;
-x = linprog(f,[],[],Aeq,beq,lb);
+[x,fval] = linprog(f,[],[],Aeq,beq,lb);
 
 % *Answer* : Yeah, there is a feasible solution involving just $x_{4}, x_{12}, x_{23}$
 
@@ -176,45 +275,120 @@ f   = c;
 Aeq = a;
 beq = b;
 lb  = 0;
-x = linprog(f,[],[],Aeq,beq,lb);
+[x,fval] = linprog(f,[],[],Aeq,beq,lb);
 
 
 
-%% Problem 2
-%%% Part B - L1 Norm
-% *Question*: $\min_{u} \left \|u*a-c \right \|_{1}$
-% for $\min_{u} \left \| u*a-b \right \|_{1}$
-[n,m] = size(a);
-Aeq = [+a -eye(n); ... 
-       -a -eye(n)];
-beq = [b ; -b];
-
-f   = [zeros(1,m) ones(1,n)]; 
-x   = linprog(f,[],[],Aeq,beq);   % check dimensionality
-
-% for $\min_{u} \left \| u*a-c \right \|_{\1}$
+%% PROBLEM 2
+%%% Part A - Infinity Norm
+% *Question*: $\min_{y} \left \|y*a-c \right \|_{\infty}$
 aa = a';
 bb = c';
 
 [n,m] = size(aa);
-Aeq = [+aa -eye(n); ...
-       -aa -eye(n)];
-beq = [bb ; -bb];
+Aineq = [+aa -ones(n,1); ... 
+         -aa -ones(n,1)];
+bineq = [bb ; -bb];
 
-f   = [zeros(1,m) ones(1,n)]; 
-x   = linprog(f,[],[],Aeq,beq);   % check dimensionality
+f   = [zeros(1,m) 1]; 
+[x,fval]   = linprog(f,Aineq,bineq,[],[]);   % check dimensionality
+fprintf('Linfty Norm - Minimum value is: %.2f \n',fval)
+
+%%% Part B - L1 Norm
+% *Question*: $\min_{u} \left \|u*a-c \right \|_{1}$
+aa = a';
+bb = c';
+
+[n,m] = size(aa);
+Aineq = [+aa -eye(n); ...
+         -aa -eye(n)];
+bineq = [+bb ; -bb];
+
+f    = [zeros(1,m) ones(1,n)]; 
+[u,fval]  = linprog(f,Aineq,bineq,[],[]); 
+fprintf('L1 Norm - Minimum value is: %.2f \n',fval)
+x_l1 = u(m+1:end);
 
 
-%%% Part A - Infinity Norm
-% *Question*: $\min_{y} \left \|y*a-c \right \|_{\infty}$
+%%% Part C
+% *Question*: $\min_{z} \left \|z*a-c \right \|_{2}$
+A = a';
+B = c';
+
+z = A' * ((A*A')\ B);
+fval = norm((A*z)-B,2);
+fprintf('L2 Norm - Minimum value is: %.2f \n',fval);
+
+
+%%% Part D
+% *Question*: $\min_{w} \left \|w*a-c \right \|_{1}+\left \|w*a-c \right \|_{\infty}$
+aa = a';
+bb = c';
+
+[n,m] = size(aa);
+Aineq = [+aa -eye(n) zeros(n,1); ...
+         -aa -eye(n) zeros(n,1); ...
+         zeros(n,m) eye(n) -ones(n,1)];
+bineq = [+bb ; -bb; zeros(n,1)];
+
+f     = [zeros(1,m) ones(1,n) 1]; 
+[w,fval]  = linprog(f,Aineq,bineq,[],[]); 
+fprintf('L1 + Infinity Norm - Minimum value is: %.2f \n',fval)
+
+
+%% PROBLEM 3
+% *Question* Solve max-flow problem - Primal
+Aeq = [ 1 -1  0 -1  0  0  0  0 ; ...
+        0  0  0  0 -1  1 -1  0 ; ...
+        0  1 -1  0  1  0  0  0 ; ...
+        0  0  0  1  0  0  1 -1 ];
+
+[n,m] = size(Aeq);    
+beq = zeros(n,1);
+
+A = eye(m);
+b = [13  5  6  1  7 12  1  4]';
+
+f  = zeros(1,m); f(1)=-1; f(6)=-1;
+lb = 0;
+
+[x_primal,fval] = linprog(f,A,b,Aeq,beq,lb);
+
+
+%% PROBLEM 4
+% *Question* Max-flow problem - Dual
+Aeq = [ 1 -1  0 -1  0  0  0  0 ; ...
+        0  0  0  0 -1  1 -1  0 ; ...
+        0  1 -1  0  1  0  0  0 ; ...
+        0  0  0  1  0  0  1 -1 ];
+Aeq = -Aeq';
+[n,m] = size(Aeq);
+
+A = eye(m);
+c = zeros(n,1); c(1)=-1; c(6)=-1;
+
+b = [13  5  6  1  7 12  1  4]';
+lb = 0;
+% [x_dual, fval] = linprog(b,[],[],Aeq,c,lb);
 
 
 
+%% PROBLEM 5
+% Equality Constraints
+% a = @(x) x(1) + x(2) + x(3) -30;
+% b = @(x) x(1)^2 + 2*x(2)^4 +3* x(3)^2 - 2;
+% c = @(x) 2*(x(1)+40)^2 + (x(2)-30)^2 + (x(3)+20)^4 - 1;
+a = [1 1 1 0 0 0 0 0 0];
+b = [0 0 0 1 1 1 0 0 0];
+c = [0 0 0 0 0 0 1 1 1];
 
+gfun = @p5con;
 
+f = @(x) norm(a-b,2).^2 + norm(c-b,2).^2 + norm(a-c,2).^2;
 
-
-
+x0 = [-2 1 0 1 4 1 1 2 3];
+options = optimoptions('fmincon','Algorithm','interior-point','Display','iter');
+[x,fval] = fmincon(f,x0,[],[],[],[],[],[],gfun,options);
 
 
 ##### SOURCE END #####
