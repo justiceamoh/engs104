@@ -88,4 +88,44 @@ b = c';
 
 x_qp = quadprog( 2*(A'*A), -2*A'*b);
 
+%%% Part D
+
+
+
+
+%% PROBLEM 3
+% *Question* Solve max-flow problem - Primal
+A = [ 1 -1  0 -1  0  0  0  0 ; ...
+      0  0  0  0 -1  1 -1  0 ; ...
+      0  1 -1  0  1  0  0  0 ; ...
+      0  0  0  1  0  0  1 -1 ]';
+b = [13  5  6  1  7 12  1  4]';
+
+[n,m] = size(A);
+f  = ones(1,m);
+lb = 0;
+
+x_primal = linprog(f,A,b,[],[],lb);
+
+
+
+%% PROBLEM 4
+% *Question* Max-flow problem - Dual
+A = [ 1 -1  0 -1  0  0  0  0 ; ...
+      0  0  0  0 -1  1 -1  0 ; ...
+      0  1 -1  0  1  0  0  0 ; ...
+      0  0  0  1  0  0  1 -1 ]';
+b = [13  5  6  1  7 12  1  4]';
+
+A = -A';
+[n,m] = size(A);
+c  = ones(n,1);
+f  = b;
+b  = -c;
+lb = 0;
+
+x_dual = linprog(f,A,b,[],[],lb);
+
+
+%% PROBLEM 5
 
