@@ -94,9 +94,9 @@ Aineq = [+aa -eye(n) zeros(n,1); ...
          zeros(n,m) eye(n) -ones(n,1)];
 bineq = [+bb ; -bb; zeros(n,1)];
 
-f    = [zeros(1,m) ones(1,n) 1]; 
+f     = [zeros(1,m) ones(1,n) 1]; 
 [w,fval]  = linprog(f,Aineq,bineq,[],[]); 
-fprintf('L1 Norm - Minimum value is: %.2f \n',fval)
+fprintf('L1 + Infinity Norm - Minimum value is: %.2f \n',fval)
 
 
 %% PROBLEM 3
