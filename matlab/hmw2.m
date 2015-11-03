@@ -20,22 +20,22 @@ Aeq = a;
 beq = b;
 lb  = zeros(1,size(a,2));
 [x,fval] = linprog(f,[],[],Aeq,beq,lb);
-% txt = sprintf('Minimum value is: %.2f \n',fval);
-% disp(txt);
+txt = sprintf('Minimum value is: %.2f \n',fval);
+disp(txt);
 
 
 %%% Part B
 % Is there a basic feasible solution involving $x_{4}, x_{12}, x_{23}$ ?
 % Set $x_{4}, x_{12}, x_{23}$ to 1, all other unknowns to zero and run LP
 f = zeros(size(c));
-f(4)=1; f(12) = 1; f(23) = 1;
+f(4)=-1; f(12) = -1; f(23) = -1;
 
 Aeq = a;
 beq = b;
 lb  = zeros(1,size(a,2));
 [x,fval] = linprog(f,[],[],Aeq,beq,lb);
-% txt = sprintf('Minimum value is: %.2f \n',fval);
-% disp(txt);
+txt = sprintf('Minimum value is: %.2f \n',fval);
+disp(txt);
 % *Answer* : Yeah, there is a feasible solution involving just $x_{4}, x_{12}, x_{23}$
 
 %%% Part C
