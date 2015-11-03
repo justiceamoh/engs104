@@ -1,6 +1,7 @@
 % Author: Justice Amoh
 % Description: ENGS 104 - Optimization: Assignment 2
 % Date: 10/26/2015
+warning('off');
 
 %% PROBLEM 1
 % Linear program in augmented form:
@@ -17,8 +18,11 @@ f(23) = -1;
 
 Aeq = a;
 beq = b;
-lb  = 0;
+lb  = zeros(1,size(a,2));
 [x,fval] = linprog(f,[],[],Aeq,beq,lb);
+% txt = sprintf('Minimum value is: %.2f \n',fval);
+% disp(txt);
+
 
 %%% Part B
 % Is there a basic feasible solution involving $x_{4}, x_{12}, x_{23}$ ?
@@ -28,18 +32,20 @@ f(4)=1; f(12) = 1; f(23) = 1;
 
 Aeq = a;
 beq = b;
-lb  = 0;
+lb  = zeros(1,size(a,2));
 [x,fval] = linprog(f,[],[],Aeq,beq,lb);
-
+% txt = sprintf('Minimum value is: %.2f \n',fval);
+% disp(txt);
 % *Answer* : Yeah, there is a feasible solution involving just $x_{4}, x_{12}, x_{23}$
 
 %%% Part C
 f   = c;
 Aeq = a;
 beq = b;
-lb  = 0;
+lb  = zeros(1,size(a,2));
 [x,fval] = linprog(f,[],[],Aeq,beq,lb);
-
+txt = sprintf('Minimum is: %.2f \n',fval);
+disp(txt);
 
 
 %% PROBLEM 2
@@ -55,8 +61,8 @@ bineq = [bb ; -bb];
 
 f   = [zeros(1,m) 1]; 
 [x,fval]   = linprog(f,Aineq,bineq,[],[]);   % check dimensionality
-fprintf('Linfty Norm - Minimum value is: %.2f \n',fval)
-
+txt = sprintf('Linfty Norm - Minimum value is: %.2f \n',fval);
+disp(txt);
 %%% Part B - L1 Norm
 % *Question*: $\min_{u} \left \|u*a-c \right \|_{1}$
 aa = a';
@@ -69,7 +75,8 @@ bineq = [+bb ; -bb];
 
 f    = [zeros(1,m) ones(1,n)]; 
 [u,fval]  = linprog(f,Aineq,bineq,[],[]); 
-fprintf('L1 Norm - Minimum value is: %.2f \n',fval)
+txt = sprintf('L1 Norm - Minimum value is: %.2f \n',fval);
+disp(txt);
 x_l1 = u(m+1:end);
 
 
@@ -80,8 +87,8 @@ B = c';
 
 z = A' * ((A*A')\ B);
 fval = norm((A*z)-B,2);
-fprintf('L2 Norm - Minimum value is: %.2f \n',fval);
-
+txt  = sprintf('L2 Norm - Minimum value is: %.2f \n',fval);
+disp(txt);
 
 %%% Part D
 % *Question*: $\min_{w} \left \|w*a-c \right \|_{1}+\left \|w*a-c \right \|_{\infty}$
@@ -96,8 +103,8 @@ bineq = [+bb ; -bb; zeros(n,1)];
 
 f     = [zeros(1,m) ones(1,n) 1]; 
 [w,fval]  = linprog(f,Aineq,bineq,[],[]); 
-fprintf('L1 + Infinity Norm - Minimum value is: %.2f \n',fval)
-
+txt=sprintf('L1 + Infinity Norm - Minimum value is: %.2f \n',fval);
+disp(txt);
 
 %% PROBLEM 3
 % *Question* Solve max-flow problem - Primal
@@ -116,7 +123,8 @@ f  = zeros(1,m); f(1)=-1; f(6)=-1;
 lb = 0;
 
 [x_primal,fval] = linprog(f,A,b,Aeq,beq,lb);
-
+txt=sprintf('Minimum value is: %.2f \n',fval);
+disp(txt);
 
 %% PROBLEM 4
 % *Question* Max-flow problem - Dual
@@ -149,7 +157,8 @@ gfun = @p5con;
 
 f = @(x) norm(a-b,2).^2 + norm(c-b,2).^2 + norm(a-c,2).^2;
 
-x0 = [-2 1 0 1 4 1 1 2 3];
-options = optimoptions('fmincon','Algorithm','interior-point','Display','iter');
+x0 = [-2 1 0 1 0 1 0 2 3];
+options = optimoptions('fmincon','Algorithm','sqp','Display','iter');
 [x,fval] = fmincon(f,x0,[],[],[],[],[],[],gfun,options);
-
+txt=sprintf('Minimum value is: %.2f \n',fval);
+disp(txt);
