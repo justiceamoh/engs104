@@ -126,6 +126,8 @@ lb = 0;
 txt=sprintf('Minimum value is: %.2f \n',fval);
 disp(txt);
 
+options = optimoptions('linprog','Algorithm','simplex');
+
 %% PROBLEM 4
 % *Question* Max-flow problem - Dual
 Aeq = [ 1 -1  0 -1  0  0  0  0 ; ...
@@ -149,16 +151,30 @@ lb = 0;
 % a = @(x) x(1) + x(2) + x(3) -30;
 % b = @(x) x(1)^2 + 2*x(2)^4 +3* x(3)^2 - 2;
 % c = @(x) 2*(x(1)+40)^2 + (x(2)-30)^2 + (x(3)+20)^4 - 1;
+
 a = [1 1 1 0 0 0 0 0 0];
 b = [0 0 0 1 1 1 0 0 0];
 c = [0 0 0 0 0 0 1 1 1];
 
 gfun = @p5con;
 
-f = @(x) norm(a-b,2).^2 + norm(c-b,2).^2 + norm(a-c,2).^2;
+f = @(x) norm(x(1:3)-x(4:6),2).^2 + norm(x(7:9)-x(4:6),2).^2 + norm(x(1:3)-x(7:9),2).^2;
 
 x0 = [-2 1 0 1 0 1 0 2 3];
 options = optimoptions('fmincon','Algorithm','sqp','Display','iter');
 [x,fval] = fmincon(f,x0,[],[],[],[],[],[],gfun,options);
 txt=sprintf('Minimum value is: %.2f \n',fval);
 disp(txt);
+
+
+
+
+
+
+
+
+
+
+
+
+
