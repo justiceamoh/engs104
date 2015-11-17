@@ -1,6 +1,8 @@
 % Author: Justice Amoh
 % Description: Function to Find Eulerian Path in G
 
+%% PROBLEM 3
+
 function y = epath(G)
 
 if (~Eulerian(G))
@@ -26,9 +28,15 @@ while (1)
     end
     
     idx = find(stack(:,1)==v(end),1); %find next edge from last node
-
-    P(end:end+1) = stack(idx,:);
-    i = idx;
+    
+    if(isempty(idx) && ~isempty(stack)) %if wrong branch, start again
+        i = randi(n);
+        stack = indx;
+        P = stack(i,:);
+    else    
+        P(end:end+1) = stack(idx,:);
+        i = idx;
+    end
 end
 
 y = P;
