@@ -1,3 +1,5 @@
+function Path = edgestopath(path)
+
 stack = path;
 val   = paths(1,1);
 Path  = [val];
@@ -13,4 +15,6 @@ while(~isempty(stack))
     
     Path(end+1) = val;
     stack(idx,:)=[];
+end
+
 end
